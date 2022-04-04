@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Нужно ли настроить автоматически интерфейсы? [y or n?]"
+echo "Нужно ли настроить автоматически сетевые интерфейсы? [y or n?]"
 read answer1
 if [[ "$answer1" == "y" || "$answer1" = "Y" ]]; then
 	mkdir /opt/scripts
