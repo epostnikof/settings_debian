@@ -1,0 +1,8 @@
+[Unit]
+Description=Up Interfaces Service
+After=multi-user.target
+[Service]
+Type=idle
+ExecStart=/opt/scripts/if.sh
+[Install]
+WantedBy=multi-user.target
