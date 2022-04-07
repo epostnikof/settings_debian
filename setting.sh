@@ -7,6 +7,30 @@ then
     exit 1
 fi
 
+#Проверка наличия файлов
+if [ -e /opt/scripts]
+then
+echo "Каталог '/opt/scripts' существует. Проверим наличие файла"
+else
+mkdir /opt/scripts
+fi
+# проверка существования файла
+if [ -e if.sh ]
+then
+echo "Файл 'if.sh' присутствует. OK"
+else
+echo "Файл не существует, склонируйте репозиторий заново."
+exit 1
+fi
+#
+if [ -e up-interface.service ]
+then
+echo "Файл 'up-interface.service' присутствует. OK"
+else
+echo "Файл 'up-interface.service' не существует, склонируйте репозиторий заново."
+exit 1
+fi
+
 echo "Будем ли поднимать сетевые интерфейсы в автоматически при запуске? [y or n]"
 #Добавляем скрипт в автозагрузку
 read answer2
