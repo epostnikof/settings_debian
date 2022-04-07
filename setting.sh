@@ -15,17 +15,20 @@ if [ "$answer2" == "y" ] || [ "$answer2" == "Y" ]
  pathsh=/opt/scripts
  filesh=if.sh
  systemdfile=up-interface.service
-
+elif [ ! -f $filesh ] && [ ! -f $systemdfile ]
+  then
+  echo "Отсутствует файл if.sh или up-interface.service"
+  exit 1
+elif [ ! -f $filesh ] && [ ! -f $systemdfile ]
+then
    mkdir $pathsh 2>/dev/null
    path=/opt/scripts/if.sh
    cp $filesh $path
    cp $systemdfile  /etc/systemd/system/
    systemctl daemon-reload
    systemctl enable $systemdfile
-elif [ ! -f $filesh ]
-then
-  echo "Отсутствует файл if.sh"
-    
+
+
   #statements
  else
 #Выясняем какие сетевые интерфейсы выключены
