@@ -12,7 +12,8 @@ if [ -e /opt/scripts]
 then
 echo "Каталог '/opt/scripts' существует. Проверим наличие файла"
 else
-mkdir /opt/scripts
+  echo "Создан каталог /opt/scripts"
+  mkdir /opt/scripts
 fi
 # проверка существования файла
 if [ -e if.sh ]
