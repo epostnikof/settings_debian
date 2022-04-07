@@ -9,14 +9,15 @@ fi
 
 echo "Нужно ли чтобы сетевые интерфейсы были подняты всегда? [y or n]"
 read answer2
-if [[ "$answer2" == "y" || "$answer2" == "Y" ]]; then
-  mkdir /opt/scripts 2>/dev/null
-  path=/opt/scripts/if.sh
-  cp if.sh $path
-  cp up-interface.service  /etc/systemd/system/
-  systemctl daemon-reload
-  systemctl enable up-interface.service
-else
+if [ "$answer2" == "y" ] || [ "$answer2" == "Y" ]
+ then
+   mkdir /opt/scripts 2>/dev/null
+   path=/opt/scripts/if.sh
+   cp if.sh $path
+   cp up-interface.service  /etc/systemd/system/
+   systemctl daemon-reload
+   systemctl enable up-interface.service
+ else
 #Выясняем какие интерфейсы подняты
 IF=$(ip a | grep DOWN | awk '{print ($2)}' | tr ':' '\n')
 echo $IF >> o.txt
@@ -36,7 +37,8 @@ fi
 
 echo "Нужно ли менять имя машины? [y or n?]"
 read answer
-if [[ "$answer" == "y" || "$answer" = "Y" ]]; then
+if [ "$answer" == "y" ] || [ "$answer" = "Y" ]
+ then
 #Сменим имя машины
 	old_name=$(uname -a | awk '{print ($2)}')
 	echo "Введите новое имя сервера:"
@@ -45,6 +47,6 @@ if [[ "$answer" == "y" || "$answer" = "Y" ]]; then
 	echo $name > /etc/hostname
 	echo "Для применения новых настроек нужно перезагрузить сервер"
 	exit
-else
+  else
 	echo "Ну и ладно"
 fi
