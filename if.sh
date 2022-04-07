@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#Выясняем какие интерфейсы подняты
+#Выясняем какие интерфейсы опущены
 IF=$(ip a | grep DOWN | awk '{print ($2)}' | tr ':' '\n')
 echo $IF >> o.txt
 cat o.txt | tr ' ' '\n' >> file
