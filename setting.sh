@@ -15,11 +15,11 @@ if [ "$answer2" == "y" ] || [ "$answer2" == "Y" ]
  pathsh=/opt/scripts
  filesh=if.sh
  systemdfile=up-interface.service
-elif [ -f $filesh ] && [ -f $systemdfile ]
+elif [ ls "$filesh" != "$filesh" ] && [ ls "$systemdfile" != "$systemdfile" ]
   then
   echo "Отсутствует файл if.sh или up-interface.service"
   exit 1
-elif [ -f $filesh ] && [ -f $systemdfile ]
+elif [ ls "$filesh" = "$filesh" ] && [ ls "$systemdfile" = "$systemdfile" ]
 then
    mkdir $pathsh 2>/dev/null
    path=/opt/scripts/if.sh
