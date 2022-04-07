@@ -36,7 +36,7 @@ echo "Будем ли поднимать сетевые интерфейсы в 
 read answer2
 if [ "$answer2" == "y" ] || [ "$answer2" == "Y" ]
  then
-   mkdir /opt/scripts 2>/dev/null
+#   mkdir /opt/scripts 2>/dev/null
    path=/opt/scripts/if.sh
    cp if.sh $path
    cp up-interface.service  /etc/systemd/system/
