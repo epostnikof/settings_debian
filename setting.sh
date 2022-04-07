@@ -1,17 +1,37 @@
 #!/usr/bin/env bash
 
-echo "Нужно ли настроить автоматически сетевые интерфейсы? [y or n?]"
-read answer1
-if [[ "$answer1" == "y" || "$answer1" = "Y" ]]; then
-	mkdir /opt/scripts
-	path=/opt/scripts/if.sh
-	cp if.sh $path
-	cp up-interface.service  /etc/systemd/system/up-interface.service
-	systemctl daemon-reload
-	systemctl enable up-interface.service
-	echo "Все сетевые интерфейсы настроены в автоматическом режиме"
+#Check ROOT
+if  [ "$(id -u)" != 0 ]
+then
+    echo root permission required >&2
+    exit 1
+fi
+
+echo "Нужно ли чтобы сетевые интерфейсы были подняты всегда? [y or n]"
+read answer2
+if [[ "$answer2" == "y" || "$answer2" == "Y" ]]; then
+  mkdir /opt/scripts 2>/dev/null
+  path=/opt/scripts/if.sh
+  cp if.sh $path
+  cp up-interface.service  /etc/systemd/system/
+  systemctl daemon-reload
+  systemctl enable up-interface.service
 else
-	echo "Значит всё работает как надо"
+#Выясняем какие интерфейсы подняты
+IF=$(ip a | grep DOWN | awk '{print ($2)}' | tr ':' '\n')
+echo $IF >> o.txt
+cat o.txt | tr ' ' '\n' >> file
+#Это костыль, но я не смог найти способ сделать проще и чтобы работал
+
+  #Поднимаем эти интерфейсы
+  #Решил оставить так, потому что если интерфейсы подняты, то ничего не произойдёт.
+for var in $(cat file)
+do
+  ip link set dev $var up
+  dhclient -v $var
+done
+  rm file
+  rm o.txt
 fi
 
 echo "Нужно ли менять имя машины? [y or n?]"
