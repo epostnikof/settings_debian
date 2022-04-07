@@ -12,12 +12,21 @@ echo "Будем ли поднимать сетевые интерфейсы в 
 read answer2
 if [ "$answer2" == "y" ] || [ "$answer2" == "Y" ]
  then
-   mkdir /opt/scripts 2>/dev/null
+ pathsh=/opt/scripts
+ filesh=if.sh
+ systemdfile=up-interface.service
+
+   mkdir $pathsh 2>/dev/null
    path=/opt/scripts/if.sh
-   cp if.sh $path
-   cp up-interface.service  /etc/systemd/system/
+   cp $filesh $path
+   cp $systemdfile  /etc/systemd/system/
    systemctl daemon-reload
-   systemctl enable up-interface.service
+   systemctl enable $systemdfile
+elif [ ! -f $filesh ]
+then
+  echo "Отсутствует файл if.sh"
+    
+  #statements
  else
 #Выясняем какие сетевые интерфейсы выключены
 IF=$(ip a | grep DOWN | awk -F: '{print ($2)}' | cut -d' ' -f2)
